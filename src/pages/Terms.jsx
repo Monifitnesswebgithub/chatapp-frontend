@@ -1,52 +1,52 @@
-// src/pages/Terms.jsx
-import React, { useEffect, useState } from "react";
-import "../styles/terms.css";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/auth.css";
 
 export default function Terms() {
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => setShow(true), 300); // animation delay
-  }, []);
+  const acceptTerms = () => {
+    // store acceptance locally
+    localStorage.setItem("acceptedTC", "true");
 
-  const acceptTC = () => {
-    localStorage.setItem("acceptedTerms", "true");
+    // move to signup page
     navigate("/signup");
   };
 
   return (
-    <div className="tc-container">
-      <div className={`tc-card ${show ? "tc-show" : ""}`}>
+    <div className="auth-container">
+      <div className="auth-card" style={{ width: 520 }}>
+        <h1>👋 Welcome to Realtime Chat</h1>
 
-        {/* Greeting Section */}
-        <h1 className="tc-title">👋 Welcome to Realtime Chat</h1>
-        <p className="tc-sub">
+        <p style={{ opacity: 0.85, marginBottom: 16 }}>
           Before continuing, please review and accept our Terms & Conditions.
         </p>
 
-        {/* T&C Content */}
-        <div className="tc-box">
-          <h2>📜 Terms & Conditions</h2>
-          <p>
-            • You agree not to use this platform for spam, abuse, harassment, or illegal activity.<br />
-            • Your chat messages may be stored for quality and security purposes.<br />
-            • Respect all users — no hate speech, bullying, or explicit content.<br />
-            • Admin has the right to ban users who violate the rules.<br />
-            • By accepting, you agree to all the above terms.
-          </p>
+        <div style={{
+          background: "rgba(255,255,255,0.05)",
+          padding: 16,
+          borderRadius: 12,
+          marginBottom: 20,
+          fontSize: 14,
+          lineHeight: 1.6
+        }}>
+          <strong>📜 Terms & Conditions</strong>
+          <ul>
+            <li>No spam, abuse, or illegal activity</li>
+            <li>Messages may be stored for security</li>
+            <li>No hate speech or harassment</li>
+            <li>Admin can ban violating users</li>
+            <li>Acceptance is required to continue</li>
+          </ul>
         </div>
 
-        {/* Accept button */}
-        <button className="tc-btn" onClick={acceptTC}>
+        <button onClick={acceptTerms}>
           Accept & Continue
         </button>
 
-        {/* Footer */}
-        <div className="tc-footer">
-          Developed by <span>Monish Kumar V</span>
-        </div>
+        <p style={{ marginTop: 14, opacity: 0.6 }}>
+          Developed by <span style={{ color: "#ff66ff" }}>Monish Kumar V</span>
+        </p>
       </div>
     </div>
   );

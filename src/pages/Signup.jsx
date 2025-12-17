@@ -1,5 +1,14 @@
 import React, { useState } from "react";
 import "../styles/signup.css";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
+
+useEffect(() => {
+  const accepted = localStorage.getItem("acceptedTC");
+  if (!accepted) navigate("/terms");
+}, [navigate]);
 
 export default function Signup() {
   const [username, setUsername] = useState("");
