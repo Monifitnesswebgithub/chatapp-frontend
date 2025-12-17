@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../styles/auth.css";
+import { useNavigate, Link } from "react-router-dom";
+import "../styles/auth.css";   // ✅ THIS WAS MISSING
+
+const API = "https://chatapp-backend-lo5k.onrender.com";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -10,54 +12,55 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
+    try {
+      const response = await fetch(`${API}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
 
-    const data = await res.json();
+      const data = await response.json();
 
-    if (!data.success) {
-      alert(data.error || "Login failed");
-      return;
+      if (!response.ok) {
+        alert(data.error || "Login failed");
+        return;
+      }
+
+      localStorage.setItem("chatUser", JSON.stringify(data.user));
+      navigate("/chat");
+
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Server not reachable");
     }
-
-    localStorage.setItem("chatUser", JSON.stringify(data.user));
-    navigate("/chat");
   };
 
   return (
-    <div className="auth-wrapper">
-      <div className="auth-card">
-        <h1 className="auth-title">Login</h1>
+    <div className="auth-container">
+      <form className="auth-card" onSubmit={handleLogin}>
+        <h1>Login</h1>
 
-        <form onSubmit={handleLogin}>
-          <input
-            className="auth-input"
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+        <input
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
 
-          <input
-            className="auth-input"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-          <button className="auth-btn" type="submit">
-            Login
-          </button>
-        </form>
+        <button type="submit">Login</button>
 
-        <p className="auth-switch">
-          Don’t have an account? <Link to="/signup">Sign Up →</Link>
+        <p>
+          Don’t have an account? <Link to="/signup">Sign Up</Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
