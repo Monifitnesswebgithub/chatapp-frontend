@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../styles/auth.css";   // ✅ THIS WAS MISSING
+import { API_URL } from "../config";
 
 const API = "https://chatapp-backend-lo5k.onrender.com";
 
