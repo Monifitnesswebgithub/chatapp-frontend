@@ -1,0 +1,102 @@
+/* Background */
+.tc-container {
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle at center, #0f0f1e, #050510 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Animated Card */
+.tc-card {
+  width: 520px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+  padding: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  color: #fff;
+  text-align: center;
+
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.tc-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Title & Subtitle */
+.tc-title {
+  font-size: 32px;
+  background: linear-gradient(90deg, #ff00ea, #a200ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+}
+
+.tc-sub {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-bottom: 25px;
+}
+
+/* Box containing T&C text */
+.tc-box {
+  text-align: left;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tc-box h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #ff9aff;
+}
+
+.tc-box p {
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Button */
+.tc-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ff00ea, #a200ff);
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tc-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 12px #ff00ff;
+}
+
+/* Footer */
+.tc-footer {
+  margin-top: 22px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.tc-footer span {
+  background: linear-gradient(90deg, #ff00ea, #a200ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: 600;
+}

@@ -1,0 +1,84 @@
+.admin-container {
+  padding: 40px;
+  background: #0a0a0a;
+  min-height: 100vh;
+  color: white;
+}
+
+.admin-title {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.admin-sub {
+  margin-bottom: 20px;
+  color: #bbb;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #111;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-table th {
+  padding: 12px;
+  background: #222;
+  text-align: left;
+}
+
+.admin-table td {
+  padding: 12px;
+  border-bottom: 1px solid #333;
+}
+
+.banned {
+  color: #ff4444;
+  font-weight: bold;
+}
+
+.active {
+  color: #44ff66;
+  font-weight: bold;
+}
+
+.ban-btn {
+  padding: 6px 14px;
+  background: #ff4444;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+.unban-btn {
+  padding: 6px 14px;
+  background: #44aaee;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+.ban-btn:hover {
+  background: #cc0000;
+}
+
+.unban-btn:hover {
+  background: #2288cc;
+}
+.logout-btn {
+  float: right;
+  background: #444;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+.logout-btn:hover {
+  background: #666;
+}
+

@@ -1,0 +1,68 @@
+/* Centering wrapper */
+.signup-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #14001f 0%, #050005 100%);
+  color: white;
+  font-family: Poppins, sans-serif;
+}
+
+/* Card */
+.signup-card {
+  width: 420px;
+  padding: 35px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+  text-align: center;
+}
+
+.signup-card h1 {
+  margin-bottom: 10px;
+  color: #ff33ff;
+}
+
+.signup-card input {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  outline: none;
+}
+
+.signup-card button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff00ff, #9b00ff);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.signup-card button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 16px rgba(255, 0, 255, 0.5);
+}
+
+.signup-card a {
+  color: #d66bff;
+  text-decoration: none;
+}
+
+.dev {
+  margin-top: 18px;
+  font-size: 13px;
+  opacity: 0.7;
+}
