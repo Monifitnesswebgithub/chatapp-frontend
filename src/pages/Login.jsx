@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../styles/auth.css";   // ✅ THIS WAS MISSING
-import { API_URL } from "../config";
 
-const API = "https://chatapp-backend-lo5k.onrender.com";
+const API = process.env.REACT_APP_API_URL;
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -17,7 +15,7 @@ export default function Login() {
       const response = await fetch(`${API}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
@@ -32,7 +30,7 @@ export default function Login() {
 
     } catch (error) {
       console.error("Login error:", error);
-      alert("Server not reachable");
+      alert("Backend not reachable");
     }
   };
 
