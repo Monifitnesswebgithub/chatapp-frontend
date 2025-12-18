@@ -1,52 +1,63 @@
-.messages {
+.messages-container {
   flex: 1;
-  overflow-y: auto;
   padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.msg-bubble {
-  max-width: 60%;
-  margin-bottom: 12px;
-  padding: 12px 16px;
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
-  background: rgba(255,255,255,0.08);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  animation: fadeIn 0.2s ease;
+/* each row */
+.message-row {
+  display: flex;
+  width: 100%;
 }
 
-/* Sent Messages (Right Side) */
-.me {
-  margin-left: auto;
-  background: linear-gradient(135deg, #d300ff55, #ff00c855);
-  border: 1px solid rgba(255,0,240,0.3);
+/* my messages → right */
+.message-row.me {
+  justify-content: flex-end;
 }
 
-/* Received Messages */
-.other {
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.15);
+/* other messages → left */
+.message-row.other {
+  justify-content: flex-start;
 }
 
-.msg-bubble .who {
+/* bubble */
+.message-bubble {
+  max-width: 65%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+/* my bubble color */
+.message-row.me .message-bubble {
+  background: linear-gradient(135deg, #d400ff, #8a00ff);
+}
+
+/* username */
+.message-user {
   font-size: 12px;
-  color: #ffb7ff;
-  margin-bottom: 5px;
+  font-weight: 600;
+  color: #ffb3ff;
+  margin-bottom: 4px;
 }
 
-.msg-bubble .txt {
-  font-size: 16px;
+/* message text */
+.message-text {
+  font-size: 15px;
   line-height: 1.4;
+  word-wrap: break-word;
 }
 
-.msg-bubble .meta {
-  margin-top: 5px;
+/* timestamp */
+.message-time {
   font-size: 11px;
   opacity: 0.6;
-}
-
-/* Animation */
-@keyframes fadeIn {
-  from { transform: translateY(5px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  margin-top: 4px;
+  text-align: right;
 }

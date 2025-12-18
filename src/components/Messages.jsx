@@ -1,34 +1,44 @@
-import React from "react";
-import "../styles/messages.css";
+import React, { useEffect, useRef } from "react";
 
-export default function Messages({ messages, username }) {
+export default function Messages({ messages = [], username }) {
+  const bottomRef = useRef(null);
+
+  // auto scroll to bottom
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
-    <div className="messages">
-      {messages.map((m, i) => {
-        if (m.system) {
-          return (
-            <div key={i} className="system-msg">
-              {m.text}
-            </div>
-          );
-        }
+    <div className="messages-container">
+      {messages.map((msg, i) => {
+        const isMe = msg.username === username;
 
         return (
           <div
             key={i}
-            className={`message ${m.username === username ? "me" : ""}`}
+            className={`message-row ${isMe ? "me" : "other"}`}
           >
-            <div className="meta">
-              <span className="user">{m.username}</span>
-              <span className="time">{m.time}</span>
-            </div>
+            <div className="message-bubble">
+              {!isMe && (
+                <div className="message-user">{msg.username}</div>
+              )}
 
-            <div className={`bubble ${m.deleted ? "deleted" : ""}`}>
-              {m.deleted ? "message deleted" : m.text}
+              <div className="message-text">{msg.text}</div>
+
+              <div className="message-time">
+                {msg.time
+                  ? new Date(msg.time).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    })
+                  : ""}
+              </div>
             </div>
           </div>
         );
       })}
+
+      <div ref={bottomRef} />
     </div>
   );
 }
