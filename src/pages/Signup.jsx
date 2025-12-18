@@ -1,72 +1,68 @@
 import React, { useState } from "react";
-import "../styles/signup.css";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-const navigate = useNavigate();
-
-useEffect(() => {
-  const accepted = localStorage.getItem("acceptedTC");
-  if (!accepted) navigate("/terms");
-}, [navigate]);
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/auth.css";
 
 export default function Signup() {
+  // ✅ Hooks INSIDE component
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [accepted, setAccepted] = useState(false);
 
-  async function handleSignup(e) {
+  const handleSignup = (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:3000/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username,
-        password,
-        acceptedTC: true
-      })
-    });
-
-    const data = await res.json();
-
-    if (!data.success) {
-      alert(data.error);
-    } else {
-      alert("Signup successful!");
-      window.location.href = "/login";
+    if (!accepted) {
+      alert("Please accept Terms & Conditions");
+      return;
     }
-  }
+
+    // TEMP: UI-only signup
+    localStorage.setItem(
+      "chatUser",
+      JSON.stringify({ username })
+    );
+
+    navigate("/chat");
+  };
 
   return (
-    <div className="signup-container">
-      <div className="signup-card">
-
-        <h1>Create Account ✨</h1>
-        <p>Join the realtime chat</p>
+    <div className="auth-container">
+      <form className="auth-card" onSubmit={handleSignup}>
+        <h1>Sign Up</h1>
 
         <input
           type="text"
-          placeholder="Choose username"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
 
         <input
           type="password"
-          placeholder="Choose password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
-        <button onClick={handleSignup}>Sign Up</button>
+        <label style={{ fontSize: 14, marginBottom: 12 }}>
+          <input
+            type="checkbox"
+            checked={accepted}
+            onChange={(e) => setAccepted(e.target.checked)}
+          />{" "}
+          I accept <Link to="/terms">Terms & Conditions</Link>
+        </label>
 
-        <p style={{ marginTop: "10px" }}>
-          Already have an account? <a href="/login">Login →</a>
+        <button type="submit">Create Account</button>
+
+        <p className="auth-footer">
+          Already have an account? <Link to="/login">Login</Link>
         </p>
-
-        <p className="dev">Developed by Monish Kumar V</p>
-
-      </div>
+      </form>
     </div>
   );
 }

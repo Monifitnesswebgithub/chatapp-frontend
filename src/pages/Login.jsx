@@ -1,37 +1,28 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-
-const API = process.env.REACT_APP_API_URL;
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/auth.css";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(`${API}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert(data.error || "Login failed");
-        return;
-      }
-
-      localStorage.setItem("chatUser", JSON.stringify(data.user));
-      navigate("/chat");
-
-    } catch (error) {
-      console.error("Login error:", error);
-      alert("Backend not reachable");
+    // TEMPORARY (UI TEST ONLY)
+    if (!username || !password) {
+      alert("Please enter username & password");
+      return;
     }
+
+    // simulate successful login
+    localStorage.setItem(
+      "chatUser",
+      JSON.stringify({ username })
+    );
+
+    navigate("/chat");
   };
 
   return (
@@ -40,6 +31,7 @@ export default function Login() {
         <h1>Login</h1>
 
         <input
+          type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -56,7 +48,7 @@ export default function Login() {
 
         <button type="submit">Login</button>
 
-        <p>
+        <p className="auth-footer">
           Don’t have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </form>
