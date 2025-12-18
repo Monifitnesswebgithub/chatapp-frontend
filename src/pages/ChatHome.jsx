@@ -1,13 +1,13 @@
-// src/pages/ChatHome.jsx
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Messages from "../components/Messages";
 import Composer from "../components/Composer";
+import socket from "../socket";
+
 import "../styles/chat.css";
 import "../styles/sidebar.css";
 import "../styles/messages.css";
 import "../styles/composer.css";
-import socket from "../socket";
 
 export default function ChatHome() {
   const saved = localStorage.getItem("chatUser");
@@ -19,19 +19,14 @@ export default function ChatHome() {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]);
 
-  // ✅ JOIN ROOM
+  // 🔥 THIS useEffect WAS THE PROBLEM BEFORE
   useEffect(() => {
     if (!username) return;
 
+    // join room
     socket.emit("join-room", { room, username });
 
-    return () => {
-      socket.emit("leave-room", { room, username });
-    };
-  }, [room, username]);
-
-  // ✅ SOCKET LISTENERS
-  useEffect(() => {
+    // listeners
     socket.on("history", (msgs) => {
       setMessages(msgs || []);
     });
@@ -52,14 +47,23 @@ export default function ChatHome() {
       setTypingUsers(list || []);
     });
 
+    socket.on("message-deleted", ({ id }) => {
+      setMessages((prev) =>
+        prev.map((m) => (m.id === id ? { ...m, deleted: 1 } : m))
+      );
+    });
+
+    // cleanup on room change
     return () => {
+      socket.emit("leave-room", { room, username });
       socket.off("history");
       socket.off("chat-message");
       socket.off("system");
       socket.off("online-users");
       socket.off("typing");
+      socket.off("message-deleted");
     };
-  }, []);
+  }, [room, username]);
 
   if (!username) {
     return (
