@@ -1,3 +1,4 @@
+// src/pages/ChatHome.jsx
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Messages from "../components/Messages";
@@ -19,24 +20,18 @@ export default function ChatHome() {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]);
 
-  // 🔥 THIS useEffect WAS THE PROBLEM BEFORE
+  // ✅ JOIN ROOM + LISTEN EVENTS
   useEffect(() => {
     if (!username) return;
 
-    // join room
     socket.emit("join-room", { room, username });
 
-    // listeners
     socket.on("history", (msgs) => {
       setMessages(msgs || []);
     });
 
     socket.on("chat-message", (msg) => {
       setMessages((prev) => [...prev, msg]);
-    });
-
-    socket.on("system", (sys) => {
-      setMessages((prev) => [...prev, { system: true, text: sys.text }]);
     });
 
     socket.on("online-users", (list) => {
@@ -47,21 +42,12 @@ export default function ChatHome() {
       setTypingUsers(list || []);
     });
 
-    socket.on("message-deleted", ({ id }) => {
-      setMessages((prev) =>
-        prev.map((m) => (m.id === id ? { ...m, deleted: 1 } : m))
-      );
-    });
-
-    // cleanup on room change
     return () => {
       socket.emit("leave-room", { room, username });
       socket.off("history");
       socket.off("chat-message");
-      socket.off("system");
       socket.off("online-users");
       socket.off("typing");
-      socket.off("message-deleted");
     };
   }, [room, username]);
 
@@ -87,7 +73,7 @@ export default function ChatHome() {
 
         {typingUsers.length > 0 && (
           <div className="typing-indicator">
-            {typingUsers.filter((u) => u !== username).join(", ")} is typing...
+            {typingUsers.filter(u => u !== username).join(", ")} is typing...
           </div>
         )}
 
