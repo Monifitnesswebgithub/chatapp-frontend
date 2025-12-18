@@ -1,6 +1,11 @@
 import { io } from "socket.io-client";
-import { SOCKET_URL } from "./config";
 
-export const socket = io(SOCKET_URL, {
-  transports: ["websocket"],
-});
+const socket = io(
+  process.env.REACT_APP_API_URL,
+  {
+    transports: ["websocket"],
+    reconnection: true
+  }
+);
+
+export default socket;
