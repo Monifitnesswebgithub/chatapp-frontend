@@ -1,11 +1,11 @@
 import { io } from "socket.io-client";
 
-const socket = io(
-  process.env.REACT_APP_API_URL,
-  {
-    transports: ["websocket"],
-    reconnection: true
-  }
-);
+// IMPORTANT: your Render backend URL
+const SOCKET_URL = "https://chatapp-backend-lo5k.onrender.com";
+
+const socket = io(SOCKET_URL, {
+  transports: ["websocket"],
+  autoConnect: true
+});
 
 export default socket;
