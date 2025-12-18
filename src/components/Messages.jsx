@@ -1,5 +1,4 @@
 import React from "react";
-import socket from "../socket";   // ✅ DEFAULT IMPORT
 import "../styles/messages.css";
 
 export default function Messages({ messages, username }) {
